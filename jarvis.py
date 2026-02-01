@@ -13,7 +13,7 @@ def home():
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    data = request.get_json()
+    data = request.get_json() or {}
     user_message = data.get("message", "")
 
     reply = f"Jarvis received: {user_message}"
