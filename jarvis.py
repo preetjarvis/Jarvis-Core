@@ -1,27 +1,16 @@
-import time
+from flask import Flask, jsonify
+import os
 
-COMMANDER = "PREET"
-AUTHORIZED = False
+app = Flask(__name__)
 
-def authorize(commander_name):
-    global AUTHORIZED
-    if commander_name.upper() == COMMANDER:
-        AUTHORIZED = True
-        return "Authorization confirmed. Awaiting commands."
-    return "Authorization denied."
-
-def think(problem):
-    return f"Thinking deeply about: {problem}"
-
-def propose_solution(problem):
-    return f"Proposed solution for '{problem}': Analyze, simulate, refine."
-
-def execute(action):
-    if not AUTHORIZED:
-        return "Execution blocked. Commander authorization required."
-    return f"Executing action: {action}"
+@app.route("/")
+def home():
+    return jsonify({
+        "status": "online",
+        "name": "Jarvis",
+        "commander": "Preet"
+    })
 
 if __name__ == "__main__":
-    print("Jarvis core online. Advisory mode active.")
-    while True:
-        time.sleep(5)
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
